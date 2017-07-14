@@ -8,6 +8,39 @@ def standardFileIO():
         for line in lines:
             line = line.strip('\n') # remove newline char
             print(line)
-        
+        infile.close()
     except FileNotFoundError:
         print("File is not found")
+ 
+def csvFileIO():
+    import csv
+    with open("starbucks.csv", newline='') as csvfile:
+        records  = csv.reader(csvfile, delimiter=',')
+        updatedPostals = []
+        oldRecords = []
+        zeros = 0
+        for row in records:
+            oldRecords.append(row)
+            if row[0] == "Store Number":
+                continue #ignore first row
+            postals = row[0].split('-')
+            zero1 = int(6-len(postals[0])) * '0' #additional 0 u have to add
+            zero2 = int(6-len(postals[1])) * '0'
+            zeros += (len(zero1)+len(zero2))
+            #print(row[0])
+            newPostal = "{}{}-{}{}".format(zero1,postals[0],zero2,postals[1])
+            #print(newPostals)
+            updatedPostals.append(newPostal)
+
+        csvfile.close()
+
+    with open("starbucks1.csv",'w', newline='') as csvfile1:
+        writer = csv.writer(csvfile1, delimiter=',')
+        i = 0
+        for record in oldRecords:
+            if record[0] == "Store Number":
+                continue
+            record[0] = updatedPostals[i]
+            i+=1
+            writer.writerow([record[0],record[1],record[2],record[3],record[4],record[5]])
+        csvfile1.close()
