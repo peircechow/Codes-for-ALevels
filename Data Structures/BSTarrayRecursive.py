@@ -7,7 +7,7 @@ class BST:
         self.root = [None for _ in range(size)]
         self.freePositions = [i for i in range(size)]
 
-    def getNextFree(self):
+    def getNextFree(self): # actually on second thoughts i think i can combine this with setPositions
         return self.freePositions[0]
 
     def setPositions(self):
