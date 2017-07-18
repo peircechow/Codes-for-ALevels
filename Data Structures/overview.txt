@@ -1,0 +1,10 @@
+Binary Search Tree
+-Dynamic (Recursive)
+-3 Array (Recursive vs Iterative)
+-2D Array
+-1 Array
+
+LinkedList, Doubly LinkedList, Queue, CircularQueue, Stack
+-Node Implementation
+-Array Implementation
+
