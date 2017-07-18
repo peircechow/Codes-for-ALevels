@@ -1,3 +1,31 @@
+def readValidation():
+    try:
+        filename = "uvuvwevwevwe_onyetenyevwe.txt"
+
+        # readfile 
+        infile = open(filename,'r')
+        # random codes here like lines = infile.readlines()
+        #YOUR CODE
+        #close file
+        infile.close()
+
+    except FileNotFoundError:
+        print("{} is not found".format(filename))
+
+    except IOError:
+        print("{} is corrupted cant read".format(filename))
+
+
+def outfile1():
+    with open("ugwemubwem_ossas.txt",'w') as outfile:
+        outfile.write("uvuvwevwevwe onyetenyevwe ugwemubwem ossas \n")
+        # using "with" removes the need to close
+     
+def outfile2():   
+    outfile = open("ugwemubwem_ossas.txt", 'w')
+    outfile.write("uvuvwevwevwe onyetenyevwe ugwemubwem ossas \n")
+    outfile.close()
+
 def standardFileIO():
     try:
         # read file
@@ -9,8 +37,12 @@ def standardFileIO():
             line = line.strip('\n') # remove newline char
             print(line)
         infile.close()
+        
     except FileNotFoundError:
         print("File is not found")
+        
+    except IOError:
+        print("{} is corrupted cant read".format(filename))
  
 def csvFileIO():
     import csv
