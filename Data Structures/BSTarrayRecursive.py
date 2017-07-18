@@ -1,7 +1,10 @@
+
 class BST:
 
     def __init__(self,size):
-        self.root = self.left = self.right = [None for _ in range(size)]
+        self.left = [None for _ in range(size)]
+        self.right = [None for _ in range(size)]
+        self.root = [None for _ in range(size)]
         self.freePositions = [i for i in range(size)]
 
     def getNextFree(self):
@@ -12,6 +15,9 @@ class BST:
         # removes first element
         print(str(self.freePositions[0]) + " is removed")
         self.freePositions = self.freePositions[1:]
+
+    def addFree(self,index):
+        self.freePositions = [index] + self.freePositions
 
     def isFull(self):
         # means no more space to insert
@@ -26,8 +32,6 @@ class BST:
         if self.root[0] is None: # check if root is empty 
             self.root[0] = data
             self.setPositions()
-        elif self.isFull(): # just added this not sure if it works
-            return "Cannot insert to full BST"
         else:
             currData = self.root[index]
             print(currData)
@@ -74,8 +78,7 @@ class BST:
                 return self.lookup(target,self.left[index],parentIndex)
             else: # go right
                 return self.lookup(target, self.right[index],parentIndex)
-            
-    # display functions may not be correct
+
     def inorder(self, index=0):
         if index is not None: # if it's None means there is nothing to display
             currData = self.root[index]
@@ -90,25 +93,47 @@ class BST:
             currData = self.root[index]
         print(currData)
         if self.left[index] is not None:
-            self.preorder(index=self.left[index])
+            self.inorder(index=self.left[index])
         
         if self.right[index] is not None:
-            self.preorder(index=self.right[index])
+            self.inorder(index=self.right[index])
 
     def delete(self,target):
         # screw this shit.
-        pass
-    
+        # in this case index means targetIndex
+        index, parentIndex = self.lookup(target) # returns curr and its parent
+        if self.left[index] == self.right[index] == None:
+        # 0 children
+           #check left
+            if self.left[parentIndex] == index: # check if parent's left child is the target
+                self.left[parentIndex] = None # points to nothing
+                self.root[index] = None # delete the root
+            else: # not left means right
+                self.right[parentIndex] = None
+                self.root[index] = None
+            self.addFree(index)
+                
+        elif (self.left[index] is None) != (self.right[index] is None):# rmb parantheses please
+            print('1 child')
+        # 1 child: link parent to child
+            if self.left[index]:
+                childIndex = self.left[index]
+            else:
+                childIndex = self.right[index]
+            # check if parent's left or parent's right
+            if self.left[parentIndex] == index:
+                #link parent to child
+                self.left[parentIndex] = childIndex
+            else:
+                self.right[parentIndex] = childIndex
+            self.root[index] = None
+            self.left[index] = self.right[index] = None # change targetIndex to null pointer
+            self.addFree(index)
+        else:
+            # 2 children oh shit.
+            pass
+
 b = BST(10)
-b.insert(10)
-b.insert(5)
-b.insert(20)
-b.insert(1)
-b.insert(25)       
-
-
-    
-            
-        
-                    
-                 
+a = [10,5,20,1,7,30]
+for e in a:
+    b.insert(e)
