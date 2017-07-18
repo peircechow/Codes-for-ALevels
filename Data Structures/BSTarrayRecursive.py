@@ -26,6 +26,8 @@ class BST:
         if self.root[0] is None: # check if root is empty 
             self.root[0] = data
             self.setPositions()
+        elif self.isFull(): # just added this not sure if it works
+            return "Cannot insert to full BST"
         else:
             currData = self.root[index]
             print(currData)
@@ -72,7 +74,8 @@ class BST:
                 return self.lookup(target,self.left[index],parentIndex)
             else: # go right
                 return self.lookup(target, self.right[index],parentIndex)
-
+            
+    # display functions may not be correct
     def inorder(self, index=0):
         if index is not None: # if it's None means there is nothing to display
             currData = self.root[index]
@@ -87,10 +90,10 @@ class BST:
             currData = self.root[index]
         print(currData)
         if self.left[index] is not None:
-            self.inorder(index=self.left[index])
+            self.preorder(index=self.left[index])
         
         if self.right[index] is not None:
-            self.inorder(index=self.right[index])
+            self.preorder(index=self.right[index])
 
     def delete(self,target):
         # screw this shit.
