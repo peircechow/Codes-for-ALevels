@@ -8,6 +8,7 @@ class BST:
         self.freePositions = [i for i in range(size)]
 
     def getNextFree(self): # actually on second thoughts i think i can combine this with setPositions
+        #if i do sth like freeIndex = self.freePositions[0] and then i setpositions() it will return the new one instead of the old one
         return self.freePositions[0]
 
     def setPositions(self):
@@ -36,7 +37,7 @@ class BST:
             currData = self.root[index]
             print(currData)
             if data < currData: # go left subtree
-                if self.left[index] == None:
+                if self.left[index] is None:
                     self.left[index] = self.getNextFree()
                     print("self.left[index] = self.nextFree")
                     self.root[self.getNextFree()] = data
@@ -45,7 +46,7 @@ class BST:
                      self.insert(data, index = self.left[index])
 
             else: # go right subtree
-                if self.right[index] == None:
+                if self.right[index] is None:
                     self.right[index] = self.getNextFree()
                     print("self.right[index] = self.nextFree")
                     self.root[self.getNextFree()] = data
