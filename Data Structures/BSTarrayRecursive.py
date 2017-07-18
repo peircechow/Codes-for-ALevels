@@ -4,31 +4,48 @@ class BST:
         self.left = [None for _ in range(size)]
         self.right = [None for _ in range(size)]
         self.root = [None for _ in range(size)]
-        self.nextFree = 0
+        self.freePositions = [i for i in range(size)]
 
+    def getNextFree(self):
+        return self.freePositions[0]
+
+    def setPositions(self):
+        # after u getNextFree
+        # removes first element
+        print(str(self.freePositions[0]) + " is removed")
+        self.freePositions = self.freePositions[1:]
+
+    def isFull(self):
+        # means no more space to insert
+        return len(self.freePositions == 0)
+
+    
+# in the following functions, index is the pointer to the current
+# element (or "Node") we are looking. index = self.left[index] to go to
+# the left element recursively and vice-versa    
     def insert(self,data,index=0): # recursive insert
         print(index)
         if self.root[0] is None: # check if root is empty 
             self.root[0] = data
-            self.nextFree += 1
+            self.setPositions()
         else:
             currData = self.root[index]
             print(currData)
             if data < currData: # go left subtree
                 if self.left[index] == None:
-                    self.left[index] = self.nextFree
+                    self.left[index] = self.getNextFree()
                     print("self.left[index] = self.nextFree")
-                    self.root[self.nextFree] = data
-                    self.nextFree += 1
+                    self.root[self.getNextFree()] = data
+                    self.setPositions()
                 else:
                      self.insert(data, index = self.left[index])
 
             else: # go right subtree
                 if self.right[index] == None:
-                    self.right[index] = self.nextFree
+                    self.right[index] = self.getNextFree()
                     print("self.right[index] = self.nextFree")
-                    self.root[self.nextFree] = data
-                    self.nextFree += 1
+                    self.root[self.getNextFree()] = data
+                    self.setPositions()
                 else:
                     self.insert(data,self.right[index])
 
@@ -79,12 +96,15 @@ class BST:
 
     def delete(self,target):
         # screw this shit.
+        pass
+    
 b = BST(10)
 b.insert(10)
 b.insert(5)
 b.insert(20)
 b.insert(1)
-b.insert(25)
+b.insert(25)       
+
 
     
             
