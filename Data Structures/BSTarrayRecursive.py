@@ -1,9 +1,7 @@
 class BST:
 
     def __init__(self,size):
-        self.left = [None for _ in range(size)]
-        self.right = [None for _ in range(size)]
-        self.root = [None for _ in range(size)]
+        self.root = self.left = self.right = [None for _ in range(size)]
         self.freePositions = [i for i in range(size)]
 
     def getNextFree(self):
