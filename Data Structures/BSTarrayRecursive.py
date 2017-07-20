@@ -1,4 +1,6 @@
 
+
+
 class BST:
 
     def __init__(self,size):
@@ -101,17 +103,17 @@ class BST:
 
     def delete(self,target):
         # screw this shit.
-        # in this case index means targetIndex
+        # in this case index means targetIndex (index of the ele that u want to del)
         index, parentIndex = self.lookup(target) # returns curr and its parent
         if self.left[index] == self.right[index] == None:
         # 0 children
            #check left
             if self.left[parentIndex] == index: # check if parent's left child is the target
                 self.left[parentIndex] = None # points to nothing
-                self.root[index] = None # delete the root
+                # self.root[index] = None # delete the root
             else: # not left means right
                 self.right[parentIndex] = None
-                self.root[index] = None
+                # self.root[index] = None
             self.addFree(index)
                 
         elif (self.left[index] is None) != (self.right[index] is None):# rmb parantheses please
@@ -127,14 +129,28 @@ class BST:
                 self.left[parentIndex] = childIndex
             else:
                 self.right[parentIndex] = childIndex
-            self.root[index] = None
-            self.left[index] = self.right[index] = None # change targetIndex to null pointer
+            # self.root[index] = None
+            # self.left[index] = self.right[index] = None # change targetIndex to null pointer
             self.addFree(index)
         else:
             # 2 children oh shit.
-            pass
+            #reach into smallest in right sub tree
+            curr ,succ = index, self.right[index]
+            while self.left[succ]:
+                # succ reaches into the smallest val in right sub tree
+                curr = succ
+                succ = self.left[curr]
+
+            # link parent to succ, and curr to self.right[succ]
+            self.right[parentIndex] = succ
+            self.left[curr] = self.right[succ]
+            self.addFree(index)
+
+            
+
 
 b = BST(10)
 a = [10,5,20,1,7,30]
 for e in a:
     b.insert(e)
+
