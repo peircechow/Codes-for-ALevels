@@ -1,4 +1,4 @@
-
+# INCOMPLETE CODE
 
 
 class BST:
@@ -156,6 +156,7 @@ class BST:
                 succ = self.left[curr]
 
             # link parent to succ, and curr to self.right[succ]
+            # the code below is wrong we cannot assume self.right[parentIndex] need check parent's left n right
             self.right[parentIndex] = succ
             self.left[curr] = self.right[succ]
             self.addFree(index)
