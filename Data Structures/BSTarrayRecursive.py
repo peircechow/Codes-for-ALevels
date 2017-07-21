@@ -24,7 +24,7 @@ class BST:
 
     def isFull(self):
         # means no more space to insert
-        return len(self.freePositions == 0)
+        return len(self.freePositions) == 0
 
     
 # in the following functions, index is the pointer to the current
@@ -32,29 +32,32 @@ class BST:
 # the left element recursively and vice-versa    
     def insert(self,data,index=0): # recursive insert
         print(index)
-        if self.root[0] is None: # check if root is empty 
-            self.root[0] = data
-            self.setPositions()
-        else:
-            currData = self.root[index]
-            print(currData)
-            if data < currData: # go left subtree
-                if self.left[index] is None:
-                    self.left[index] = self.getNextFree()
-                    print("self.left[index] = self.nextFree")
-                    self.root[self.getNextFree()] = data
-                    self.setPositions()
-                else:
-                     self.insert(data, index = self.left[index])
+        if not self.isFull():
+            if self.root[0] is None: # check if root is empty 
+                self.root[0] = data
+                self.setPositions()
+            else:
+                currData = self.root[index]
+                print(currData)
+                if data < currData: # go left subtree
+                    if self.left[index] is None:
+                        self.left[index] = self.getNextFree()
+                        print("self.left[index] = self.nextFree")
+                        self.root[self.getNextFree()] = data
+                        self.setPositions()
+                    else:
+                         self.insert(data, index = self.left[index])
 
-            else: # go right subtree
-                if self.right[index] is None:
-                    self.right[index] = self.getNextFree()
-                    print("self.right[index] = self.nextFree")
-                    self.root[self.getNextFree()] = data
-                    self.setPositions()
-                else:
-                    self.insert(data,self.right[index])
+                else: # go right subtree
+                    if self.right[index] is None:
+                        self.right[index] = self.getNextFree()
+                        print("self.right[index] = self.nextFree")
+                        self.root[self.getNextFree()] = data
+                        self.setPositions()
+                    else:
+                        self.insert(data,self.right[index])
+        else:
+            print("Cannot insert into full BST")
 
     def search(self,target,index=0):
         if index is None:
@@ -97,9 +100,21 @@ class BST:
         print(currData)
         if self.left[index] is not None:
             self.inorder(index=self.left[index])
-        
         if self.right[index] is not None:
             self.inorder(index=self.right[index])
+
+    def getHeight(self,target):
+        currIndex, parentIndex = self.lookup(target)
+        if self.right[currIndex] == self.left[currIndex] == None:
+            return 1
+        else:
+            if self.left[currIndex] is None:
+                return self.getHeight(self.root[self.right[currIndex]]) + 1
+            elif self.right[currIndex] is None:
+                return self.getHeight(self.root[self.left[currIndex]]) + 1
+            else:
+                return max(self.getHeight(self.root[self.left[currIndex]]),
+                           self.getHeight(self.root[self.right[currIndex]])) + 1 
 
     def delete(self,target):
         # screw this shit.
@@ -133,7 +148,6 @@ class BST:
             # self.left[index] = self.right[index] = None # change targetIndex to null pointer
             self.addFree(index)
         else:
-            # 2 children oh shit.
             #reach into smallest in right sub tree
             curr ,succ = index, self.right[index]
             while self.left[succ]:
@@ -153,4 +167,5 @@ b = BST(10)
 a = [10,5,20,1,7,30]
 for e in a:
     b.insert(e)
+
 
