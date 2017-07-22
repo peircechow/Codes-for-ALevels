@@ -20,7 +20,7 @@ class BST:
         self.freePositions = self.freePositions[1:]
 
     def addFree(self,index):
-        self.freePositions = [index] + self.freePositions
+        self.freePositions = self.freePositions + [index]
 
     def isFull(self):
         # means no more space to insert
@@ -157,15 +157,20 @@ class BST:
 
             # link parent to succ, and curr to self.right[succ]
             # the code below is wrong we cannot assume self.right[parentIndex] need check parent's left n right
-            self.right[parentIndex] = succ
-            self.left[curr] = self.right[succ]
-            self.addFree(index)
+            # replace node's data with succ's data
+            self.root[index] = self.root[succ]
+            # link to succ.right
+            if self.left[curr] = succ:
+                self.left[curr] = self.right[succ]
+            else:
+                self.right[curr] = self.right[succ]
+            self.addFree(succ) # we just replaced index's data with succ's data as we want to keep the links
 
             
 
 
 b = BST(10)
-a = [10,5,20,1,7,30]
+a = [10,5,15,2,7,6]
 for e in a:
     b.insert(e)
 
