@@ -1,6 +1,3 @@
-# INCOMPLETE CODE
-
-
 class BST:
 
     def __init__(self,size):
@@ -9,7 +6,8 @@ class BST:
         self.root = [None for _ in range(size)]
         self.freePositions = [i for i in range(size)]
 
-    def getNextFree(self): # actually on second thoughts i think i can combine this with setPositions
+    def getNextFree(self):
+        
         #if i do sth like freeIndex = self.freePositions[0] and then i setpositions() it will return the new one instead of the old one
         return self.freePositions[0]
 
@@ -20,7 +18,7 @@ class BST:
         self.freePositions = self.freePositions[1:]
 
     def addFree(self,index):
-        self.freePositions = self.freePositions + [index]
+        self.freePositions = [index] + self.freePositions 
 
     def isFull(self):
         # means no more space to insert
@@ -102,19 +100,7 @@ class BST:
             self.inorder(index=self.left[index])
         if self.right[index] is not None:
             self.inorder(index=self.right[index])
-
-    def getHeight(self,target):
-        currIndex, parentIndex = self.lookup(target)
-        if self.right[currIndex] == self.left[currIndex] == None:
-            return 1
-        else:
-            if self.left[currIndex] is None:
-                return self.getHeight(self.root[self.right[currIndex]]) + 1
-            elif self.right[currIndex] is None:
-                return self.getHeight(self.root[self.left[currIndex]]) + 1
-            else:
-                return max(self.getHeight(self.root[self.left[currIndex]]),
-                           self.getHeight(self.root[self.right[currIndex]])) + 1 
+ 
 
     def delete(self,target):
         # screw this shit.
@@ -160,18 +146,38 @@ class BST:
             # replace node's data with succ's data
             self.root[index] = self.root[succ]
             # link to succ.right
-            if self.left[curr] = succ:
+            if self.left[curr] == succ:
                 self.left[curr] = self.right[succ]
             else:
                 self.right[curr] = self.right[succ]
             self.addFree(succ) # we just replaced index's data with succ's data as we want to keep the links
 
-            
 
+    def getHeight(self,index=0): # gets height of BST using recursion
+        if index is None:
+            return -1 # 1 layer below the lowest node
+        else:
+            # get 1 + the higher of the left and right subtree
+            return 1 + max(self.getHeight(self.left[index]),self.getHeight(self.right[index]))
+
+    def getTargetHeight(self,target):
+        target,parent = self.lookup(target)
+        if target is None:
+            return "No such element here"
+        else:
+            return self.getHeight(target)
 
 b = BST(10)
 a = [10,5,15,2,7,6]
 for e in a:
     b.insert(e)
+
+##     10
+##   5    15
+## 2   7
+##    6
+##
+##    
+
 
 
