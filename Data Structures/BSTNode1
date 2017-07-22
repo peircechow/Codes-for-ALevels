@@ -19,22 +19,30 @@ class BST:
     def search(self,target):
         if self.data == target:
             print("Found")
-        elif self.left == self.right == None:
-            print("not found")
         elif target < self.data:
-            self.left.search(target)
+            if self.left is None:
+                print("Not found")
+            else:
+                self.left.search(target)
         else:
-            self.right.search(target)
+            if self.right is None:
+                print("Not Found")
+            else:
+                self.right.search(target)
 
     def lookup(self,target,parent=None):
         if self.data == target:
             return self,parent
-        elif self.left == self.right == None:
-            return None, None
         elif target < self.data:
-            return self.left.lookup(target,self)
+            if self.left is None:
+                return None,None
+            else:
+                return self.left.lookup(target,self)
         else:
-            return self.right.lookup(target,self)
+            if self.right is None:
+                return None, None
+            else:
+                return self.right.lookup(target,self)
         
     def delete(self,target):
         node, parent = self.lookup(target)
