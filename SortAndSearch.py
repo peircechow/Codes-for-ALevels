@@ -11,7 +11,7 @@ def binarySort2(A): # normal implementation
         return [A[len(A)//2]] + binarySort2(A[:len(A)//2]) +  binarySort2(A[len(A)//2+1 :])
 
 
-def qsort(A):
+def quicksortIterative(A):
     def part(A):
         less,equal,more = [],[],[]
         pivot = A[0]
