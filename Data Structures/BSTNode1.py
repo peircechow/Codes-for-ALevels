@@ -78,7 +78,21 @@ class BST:
                 else:
                     curr.right = succ.right # e.g. when curr is the parent
                 
+    def inorderIter(self): # iterative version
+        s = [self] # initialise stack
+        curr = self
+        while s != []:
+            if curr.left: # keep going left
+                
+                curr = curr.left
+                s.append(curr)
 
+            else: # curr.left is None
+                curr = s.pop() # pop from stack
+                print(curr.data)
+                if curr.right: # check right
+                    s.append(curr.right)
+                    curr = curr.right
     def inorder(self):
         if self.left:
             self.left.inorder()
