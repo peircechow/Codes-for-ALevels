@@ -25,3 +25,11 @@ def XDaysAfter():
     d1 = d.datetime(2017,1,20)
     daysAfter = 90
     print("{} after {} is {}".format(daysAfter, d1, d1+d.timedelta(daysAfter))
+          
+def timeInterval():
+    # https://stackoverflow.com/questions/3096953/how-to-calculate-the-time-interval-between-two-time-strings 
+    from datetime import datetime
+    s1 = '10:33:26' 
+    s2 = '11:15:49' # for example
+    FMT = '%H:%M:%S'
+    tdelta = datetime.strptime(s2, FMT) - datetime.strptime(s1, FMT)
