@@ -33,3 +33,29 @@ def timeInterval():
     s2 = '11:15:49' # for example
     FMT = '%H:%M:%S'
     tdelta = datetime.strptime(s2, FMT) - datetime.strptime(s1, FMT)
+
+          
+#-------------------------------OTHER RANDOM ALGOS-----------------------------------------#
+
+
+def checkDuplicate(A):
+    # http://www.geeksforgeeks.org/find-duplicates-in-on-time-and-constant-extra-space/ 
+    
+    import random as r
+    size = 10
+    A = [r.randint(1,size-1) for _ in range(size)]
+    print(A)
+    # condition is that array is length of n
+    # and numbers are in the range of 0 to n-1 # currently does not work for 0
+    # we do this in O(n) time complexity and O(1) extra space
+
+    for i in range(len(A)):
+        index = abs(A[i]) # if the same index is used twice, it will visit the negative element the second time
+        # check if negative or positive
+        if A[index] > 0:
+            # mark as negative (ie "visited")
+            A[index] = -A[index]
+        else: # encountered a duplicated index as it is negative
+            print(index)
+    
+    
