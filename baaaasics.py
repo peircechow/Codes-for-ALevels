@@ -58,4 +58,17 @@ def checkDuplicate(A):
         else: # encountered a duplicated index as it is negative
             print(index)
     
-    
+          
+          
+def subsetSum(A,n):
+    if len(A) == 0 or n<=0:
+        return False
+    if A[0] == n: # matches
+        return [A[0]] # list containing first element for list concatanation
+    sumValue = subsetSum(A[1:],n-A[0])
+    if sumValue:
+        return [A[0]] + sumValue
+    else:
+        # move to next value or take the first value 
+        return subsetSum(A[1:],n) or subsetSum(A[1:],n-A[0])
+
